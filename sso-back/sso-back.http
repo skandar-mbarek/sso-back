@@ -1,0 +1,6 @@
+@sso_back_HostAddress = http://localhost:5219
+
+GET {{sso_back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
