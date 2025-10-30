@@ -12,9 +12,9 @@ public class AuthorizationController : ControllerBase
     private const string ExchangeCode = "123456789";
     private const string UserToken = "EVsMumo9bxcuidwcMf3sGqw8uf%2BYhSM%2Bq28A698vtvyf%2BrEtnOB9STWeCI1OvEQ";
     private const string ClientId1 = "client-app-1"; 
-    private const string ClientUrl1 ="http://localhost:3001/";
+    private const string ClientUrl1 ="https://sso-client-1.vercel.app/";
     private const string ClientId2 = "client-app-2"; 
-    private const string ClientUrl2 ="http://localhost:3002/";
+    private const string ClientUrl2 ="https://sso-client-2.vercel.app/";
     
     [HttpPost("login")]
     public IActionResult Login(LoginReq request)
