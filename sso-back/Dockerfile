@@ -4,7 +4,7 @@ WORKDIR /app
 EXPOSE 8080
 
 # Use the .NET SDK image for building the app
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy csproj and restore dependencies
