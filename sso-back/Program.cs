@@ -27,16 +27,28 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
                 "http://localhost:3000",
                 "https://localhost:3000",
-                "http://localhost:3001",
+                "http://localhost:3001", 
                 "https://localhost:3001",
                 "http://localhost:3002",
                 "https://localhost:3002",
                 "http://172.26.144.1:3002",
-                "http://172.26.144.1:3001",
+                "http://172.26.144.1:3001", 
                 "http://172.26.144.1:3000",
                 "https://main-sso-front.netlify.app",
+                "https://main-sso-front.netlify.app/",
+                "http://main-sso-front.netlify.app", 
+                "https://*.netlify.app", 
+                
+                "https://sso-client-1.vercel.app/",
                 "https://sso-client-1.vercel.app",
-                "https://sso-client-2.vercel.app"
+                "http://sso-client-1.vercel.app",
+                "https://*.vercel.app",
+
+                
+                "https://sso-client-2.vercel.app/",
+                "https://sso-client-2.vercel.app",
+                "http://sso-client-2.vercel.app",
+                "https://*.vercel.app"
                 )
             .AllowAnyHeader()
             .AllowAnyMethod()
