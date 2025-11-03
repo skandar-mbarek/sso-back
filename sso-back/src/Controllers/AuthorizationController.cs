@@ -1,66 +1,100 @@
 using Microsoft.AspNetCore.Mvc;
 using sso_back.Dtos;
+using sso_back.Dtos.RequestDtos;
+using sso_back.Dtos.ResponseDtos;
+using sso_back.Services;
 
 namespace sso_back.Controllers;
 
 [ApiController]
 [Route("api/connect")]
-public class AuthorizationController : ControllerBase
+public class AuthorizationController(IAuthorizationService authorizationService) : ControllerBase
 {
-    private const string UserEmail = "admin@bookini.com";
-    private const string UserPassword = "admin123";
-    private const string ExchangeCode = "123456789";
-    private const string UserToken = "EVsMumo9bxcuidwcMf3sGqw8uf%2BYhSM%2Bq28A698vtvyf%2BrEtnOB9STWeCI1OvEQ";
-    private const string ClientId1 = "client-app-1"; 
-    private const string ClientUrl1 ="https://sso-client-1.vercel.app/";
-    private const string ClientId2 = "client-app-2"; 
-    private const string ClientUrl2 ="https://sso-client-2.vercel.app/";
-    
+
+    [HttpGet("authorize")]
+    public async Task<IActionResult> AuthorizeClient([FromHeader] string clientToken)
+    {
+        if (Request.Cookies.TryGetValue("REFRESH_TOKEN", out var refreshToken))
+        {
+            var response = await authorizationService.RefreshToken(refreshToken);
+
+            if (response == null)
+            {
+                var redirectUrl = await authorizationService.AuthorizeClient(clientToken);
+                throw new BadHttpRequestException("Refresh token could not be retrieved");
+            }
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+            };
+            Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
+            return Ok(new { access_token = response.AccessToken });
+        }
+
+        var redirectUrl2 = await authorizationService.AuthorizeClient(clientToken);
+        throw new UnauthorizedAccessException("Refresh token could not be retrieved");
+    }
+
+
+
+
     [HttpPost("login")]
-    public IActionResult Login(LoginReq request)
+    public async Task<IActionResult> Login([FromBody] LoginReq req)
     {
-        if (request.Email == UserEmail && request.Password == UserPassword)
+        var response = await authorizationService.Login(req);
+        var cookieOptions = new CookieOptions
         {
-            switch (request.ClientId)
-            {
-                case ClientId1:
-                    return Ok(new{redirectUrl=$"{ClientUrl1}exchange?exchangeCode={ExchangeCode}",token=UserToken});
-                case ClientId2 :
-                    return Ok(new{redirectUrl=$"{ClientUrl2}exchange?exchangeCode={ExchangeCode}",token=UserToken});
-                default:
-                    throw new BadHttpRequestException("Invalid client ID");
-            }
-        }
-        throw new UnauthorizedAccessException();
+            HttpOnly = true,
+            Secure = false,
+            SameSite = SameSiteMode.Strict,
+        };
+        Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
+        return Ok(new{redirectUrl = response.RedirectUrl});
     }
 
-    [HttpPost("callback")]
-    public IActionResult Callback(string token ,string clientId)
-    {
-        if (token == UserToken)
-        {
-            switch (clientId)
-            {
-                case ClientId1:
-                    return Ok(new{redirectUrl=$"{ClientUrl1}exchange?exchangeCode={ExchangeCode}",token=UserToken});
-                case ClientId2 :
-                    return Ok(new{redirectUrl=$"{ClientUrl2}exchange?exchangeCode={ExchangeCode}",token=UserToken});
-                default:
-                    throw new BadHttpRequestException("Invalid client ID");
-            }
-        }
-
-        throw new UnauthorizedAccessException();
-    }
-    
     [HttpPost("exchange")]
-    public IActionResult Login(string code)
+    public async Task<IActionResult> ExchangeToken(string code)
     {
-        if (code == ExchangeCode)
+        var response = await authorizationService.ExchangeToken(code);
+        
+        var cookieOptions = new CookieOptions
         {
-            return Ok(new {token = UserToken });
-        }
-        throw new BadHttpRequestException("Invalid Exchange Code");
+            HttpOnly = true,
+            Secure = false,
+            SameSite = SameSiteMode.Strict,
+        };
+        Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
+        return Ok(new {access_token = response.AccessToken});
+
     }
     
+    [HttpPost("check-session")]
+    public async Task<IActionResult> CheckSession(string clientUrl)
+    {
+        if (Request.Cookies.TryGetValue("SESSION_TOKEN", out var sessionToken))
+        {
+            var checkSessionReq = new ValidateSessionReq
+            {
+                ClientUrl = clientUrl,
+                SessionToken = sessionToken
+            };
+            var response = await authorizationService.ValidateSessionToken(checkSessionReq);
+            if (response == null)
+            {
+                throw new UnauthorizedAccessException("Session expired");
+            }
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+            };
+            Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
+            return Ok( new {redirectUrl=response.RedirectUrl});
+        }
+        throw new UnauthorizedAccessException("Not connected");
+    }
 }
