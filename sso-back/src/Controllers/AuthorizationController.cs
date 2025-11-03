@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using sso_back.Dtos;
 using sso_back.Dtos.RequestDtos;
@@ -8,6 +9,7 @@ namespace sso_back.Controllers;
 
 [ApiController]
 [Route("api/connect")]
+[EnableCors("AllowAll")] // Add this attribute
 public class AuthorizationController(IAuthorizationService authorizationService) : ControllerBase
 {
 
@@ -51,8 +53,8 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
-            Secure = true, // Must be true for Netlify (HTTPS)
-            SameSite = SameSiteMode.None, // Required for cross-origin
+            Secure = true, 
+            SameSite = SameSiteMode.None, 
             Expires = DateTime.UtcNow.AddMonths(3),
             Domain =  ".netlify.app", 
             Path = "/"
