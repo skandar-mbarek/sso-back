@@ -76,7 +76,7 @@ public class AuthorizationService : IAuthorizationService
             IsUsed = false,
             UserId = user.Id,
             UserSessionId = savedSession.Id,
-            ExpiredAt = DateTime.Now.AddMinutes(10)
+            ExpiredAt = DateTime.UtcNow.AddMinutes(10)
         };
 
         var savedCode = await _exchangeCodeRepo.CreateExchangeCode(exchangeCode);
@@ -103,7 +103,7 @@ public class AuthorizationService : IAuthorizationService
         if (exchangeCode.IsUsed)
             throw new UnauthorizedAccessException("this code is already used");
         
-        if (exchangeCode.ExpiredAt<DateTime.Now)
+        if (exchangeCode.ExpiredAt<DateTime.UtcNow)
             throw new UnauthorizedAccessException("this code is expired");
         
         var claims = new List<Claim>
@@ -185,7 +185,7 @@ public class AuthorizationService : IAuthorizationService
             IsUsed = false,
             UserId = session.UserId,
             UserSessionId = session.Id,
-            ExpiredAt = DateTime.Now.AddMinutes(10)
+            ExpiredAt = DateTime.UtcNow.AddMinutes(10)
         };
         
         var savedCode = await _exchangeCodeRepo.CreateExchangeCode(exchangeCode);
