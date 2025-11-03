@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sso-back")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+423445c53555953475d9a744eedb9e70a98f3015")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edb3841bed35a8c19a9b9d970b9b896a9c24dc6f")]
 [assembly: System.Reflection.AssemblyProductAttribute("sso-back")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sso-back")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

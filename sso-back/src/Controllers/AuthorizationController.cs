@@ -31,7 +31,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
                 HttpOnly = true,
                 Secure = true, // Must be true for Netlify (HTTPS)
                 SameSite = SameSiteMode.None, // Required for cross-origin
-                Expires = DateTime.UtcNow.AddMonths(3),
+                Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
             Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
@@ -54,7 +54,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             HttpOnly = true,
             Secure = true, 
             SameSite = SameSiteMode.None, 
-            Expires = DateTime.UtcNow.AddMonths(3),
+            Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
         Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
@@ -71,7 +71,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             HttpOnly = true,
             Secure = true, // Must be true for Netlify (HTTPS)
             SameSite = SameSiteMode.None, // Required for cross-origin
-            Expires = DateTime.UtcNow.AddMonths(3),
+            Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
         Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
@@ -99,7 +99,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
                 HttpOnly = true,
                 Secure = true, // Must be true for Netlify (HTTPS)
                 SameSite = SameSiteMode.None, // Required for cross-origin
-                Expires = DateTime.UtcNow.AddMonths(3),
+                Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
             Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
