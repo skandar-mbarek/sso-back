@@ -27,10 +27,11 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.None,
-                Expires = DateTime.UtcNow.AddMonths(3)
-
+                Secure = true, // Must be true for Netlify (HTTPS)
+                SameSite = SameSiteMode.None, // Required for cross-origin
+                Expires = DateTime.UtcNow.AddMonths(3),
+                Domain =  ".vercel.app", 
+                Path = "/"
             };
             Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
             return Ok(new { access_token = response.AccessToken });
@@ -50,10 +51,11 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
-            Secure = false,
-            SameSite = SameSiteMode.None,
-            Expires = DateTime.UtcNow.AddMonths(3)
-
+            Secure = true, // Must be true for Netlify (HTTPS)
+            SameSite = SameSiteMode.None, // Required for cross-origin
+            Expires = DateTime.UtcNow.AddMonths(3),
+            Domain =  ".netlify.app", 
+            Path = "/"
         };
         Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
         return Ok(new{redirectUrl = response.RedirectUrl});
@@ -67,10 +69,11 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
-            Secure = false,
-            SameSite = SameSiteMode.None,
-            Expires = DateTime.UtcNow.AddMonths(3)
-
+            Secure = true, // Must be true for Netlify (HTTPS)
+            SameSite = SameSiteMode.None, // Required for cross-origin
+            Expires = DateTime.UtcNow.AddMonths(3),
+            Domain =  ".vercel.app", 
+            Path = "/"
         };
         Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
         return Ok(new {access_token = response.AccessToken});
@@ -95,10 +98,11 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.None,
-                Expires = DateTime.UtcNow.AddMonths(3)
-
+                Secure = true, // Must be true for Netlify (HTTPS)
+                SameSite = SameSiteMode.None, // Required for cross-origin
+                Expires = DateTime.UtcNow.AddMonths(3),
+                Domain =  ".netlify.app", 
+                Path = "/"
             };
             Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
             return Ok( new {redirectUrl=response.RedirectUrl});
