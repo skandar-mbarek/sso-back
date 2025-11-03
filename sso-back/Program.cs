@@ -52,7 +52,9 @@ builder.Services.AddCors(options =>
                 )
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials();
+            .AllowCredentials()
+            .SetIsOriginAllowedToAllowWildcardSubdomains();
+
     });
 });
 builder.Services.AddIdentity<User,IdentityRole>(options =>
