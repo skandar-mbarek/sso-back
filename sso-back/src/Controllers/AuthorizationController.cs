@@ -29,6 +29,8 @@ public class AuthorizationController(IAuthorizationService authorizationService)
                 HttpOnly = true,
                 Secure = false,
                 SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddMonths(3)
+
             };
             Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
             return Ok(new { access_token = response.AccessToken });
@@ -50,6 +52,8 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             HttpOnly = true,
             Secure = false,
             SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddMonths(3)
+
         };
         Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
         return Ok(new{redirectUrl = response.RedirectUrl});
@@ -63,8 +67,10 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
-            Secure = false,
+            Secure = true,
             SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddMonths(3)
+            
         };
         Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
         return Ok(new {access_token = response.AccessToken});
@@ -89,8 +95,10 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
+                Secure = true,
                 SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddMonths(3)
+
             };
             Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
             return Ok( new {redirectUrl=response.RedirectUrl});
