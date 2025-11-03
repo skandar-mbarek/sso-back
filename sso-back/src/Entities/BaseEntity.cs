@@ -12,12 +12,12 @@ public class BaseEntity
     protected BaseEntity()
     {
         Id = Guid.NewGuid().ToString();
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void UpdateTimestamps()
     {
-        UpdatedAt = DateTime.Now;
+        UpdatedAt = DateTime.UtcNow;
     }
 }
