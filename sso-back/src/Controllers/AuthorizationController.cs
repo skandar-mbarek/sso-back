@@ -30,7 +30,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             {
                 HttpOnly = true,
                 Secure = true, 
-                SameSite = SameSiteMode.Strict, 
+                SameSite = SameSiteMode.Lax, 
                 Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
@@ -53,7 +53,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         {
             HttpOnly = true,
             Secure = true, 
-            SameSite = SameSiteMode.Strict, 
+            SameSite = SameSiteMode.Lax, 
             Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
@@ -70,7 +70,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         {
             HttpOnly = true,
             Secure = true, 
-            SameSite = SameSiteMode.Strict, 
+            SameSite = SameSiteMode.Lax, 
             Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
@@ -97,7 +97,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             {
                 HttpOnly = true,
                 Secure = true, 
-                SameSite = SameSiteMode.Strict, 
+                SameSite = SameSiteMode.Lax, 
                 Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
