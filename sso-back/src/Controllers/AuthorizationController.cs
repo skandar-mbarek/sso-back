@@ -30,7 +30,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             {
                 HttpOnly = true,
                 Secure = true, 
-                SameSite = SameSiteMode.Lax, 
+                SameSite = SameSiteMode.None, 
                 Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
@@ -53,8 +53,9 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         {
             HttpOnly = true,
             Secure = true, 
-            SameSite = SameSiteMode.Lax, 
+            SameSite = SameSiteMode.None, 
             Expires = DateTime.UtcNow.AddHours(10),
+            Domain = ".onrender.com",
             Path = "/"
         };
         Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
@@ -70,7 +71,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         {
             HttpOnly = true,
             Secure = true, 
-            SameSite = SameSiteMode.Lax, 
+            SameSite = SameSiteMode.None, 
             Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
@@ -97,7 +98,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             {
                 HttpOnly = true,
                 Secure = true, 
-                SameSite = SameSiteMode.Lax, 
+                SameSite = SameSiteMode.None, 
                 Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
