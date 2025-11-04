@@ -29,8 +29,8 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true, // Must be true for Netlify (HTTPS)
-                SameSite = SameSiteMode.None, // Required for cross-origin
+                Secure = true, 
+                SameSite = SameSiteMode.Strict, 
                 Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
@@ -53,7 +53,7 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         {
             HttpOnly = true,
             Secure = true, 
-            SameSite = SameSiteMode.None, 
+            SameSite = SameSiteMode.Strict, 
             Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
@@ -69,14 +69,13 @@ public class AuthorizationController(IAuthorizationService authorizationService)
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
-            Secure = true, // Must be true for Netlify (HTTPS)
-            SameSite = SameSiteMode.None, // Required for cross-origin
+            Secure = true, 
+            SameSite = SameSiteMode.Strict, 
             Expires = DateTime.UtcNow.AddHours(10),
             Path = "/"
         };
         Response.Cookies.Append("REFRESH_TOKEN", response.RefreshToken, cookieOptions);
         return Ok(new {access_token = response.AccessToken});
-
     }
     
     [HttpPost("check-session")]
@@ -97,8 +96,8 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true, // Must be true for Netlify (HTTPS)
-                SameSite = SameSiteMode.None, // Required for cross-origin
+                Secure = true, 
+                SameSite = SameSiteMode.Strict, 
                 Expires = DateTime.UtcNow.AddHours(10),
                 Path = "/"
             };
