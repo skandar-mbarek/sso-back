@@ -55,7 +55,6 @@ public class AuthorizationController(IAuthorizationService authorizationService)
             Secure = true, 
             SameSite = SameSiteMode.None, 
             Expires = DateTime.UtcNow.AddHours(10),
-            Domain = ".onrender.com",
             Path = "/"
         };
         Response.Cookies.Append("SESSION_TOKEN", response.SessionToken, cookieOptions);
